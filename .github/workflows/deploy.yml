@@ -8,4 +8,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Deploy to Render
-        run: curl -X POST -H "Authorization: Bearer ${{ secrets.RENDER_API_TOKEN }}" -d '{"clearCache":"do_not_clear"}' https://api.render.com/v1/services/<srv-d4boh963jp1c73bsu7hg>/deploys
+        env:
+          RENDER_API_TOKEN: ${{ secrets.RENDER_API_TOKEN }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer $RENDER_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"clearCache":"do_not_clear"}' \
+            https://api.render.com/v1/services/srv-d4boh963jp1c73bsu7hg/deploys
