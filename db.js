@@ -1,22 +1,14 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-const connectDB = async () => {
+export default async function connectDB() {
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('MongoDB connected successfully');
+    console.log('MongoDB connected');
   } catch (error) {
-    console.error('MongoDB connection error:', error.message);
-    if (error.name === 'MongoServerError' && error.code === 8000) {
-      console.error('Authentication failed. Check MONGODB_URI credentials.');
-    }
+    console.error('MongoDB connection error:', error);
     process.exit(1);
   }
-};
-
-export default connectDB;
+}
