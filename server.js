@@ -77,6 +77,10 @@ app.set('io', io);
 cron.schedule('0 0 * * *', () => {
   updateDailyTasksAndRankings().catch(console.error);
 });
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api', statusRouter);

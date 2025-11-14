@@ -6,7 +6,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4 # Updated to latest version
       - name: Deploy to Render
         env:
           RENDER_API_TOKEN: ${{ secrets.RENDER_API_TOKEN }}
@@ -15,5 +15,6 @@ jobs:
           curl -X POST \
             -H "Authorization: Bearer $RENDER_API_TOKEN" \
             -H "Content-Type: application/json" \
-            -d '{"clearCache":"do_not_clear"}' \
+            -d '{"clearCache": "do_not_clear"}' \
             https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys
+        continue-on-error: false # Fail the job on curl errors

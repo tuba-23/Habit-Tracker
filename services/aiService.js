@@ -5,7 +5,7 @@ import Habit from '../models/habitModel.js';
 
 dotenv.config();
 const aiClient = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY);
-const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
+const redis = new Redis(process.env.REDIS_URL);
 
 export async function recommendHabits(userData) {
   const model = aiClient.getGenerativeModel({ model: 'gemini-pro' });
